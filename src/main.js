@@ -1,4 +1,4 @@
-// src/main.js
+// src/main.jss
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './routers' 
