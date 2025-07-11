@@ -1,63 +1,60 @@
 <template>
   <div class="home">
-    <div class="hero">
-      <h1>Selamat Datang di MakanYuk!</h1>
-      <p>Temukan dan pesan makanan favoritmu dengan mudah, cepat, dan lezat 🍽️</p>
-      <button>Jelajahi Menu</button>
+    <div class="overlay">
+      <h2 class="logo">🍔 FoodOrder</h2>
+      <h1>Selamat Datang di FoodOrder</h1>
+      <p>Pesan makanan favoritmu hanya dengan beberapa klik!</p>
+      <router-link to="/restaurant" class="cta">Lihat Menu</router-link>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'HomeView'
-}
+<script setup>
+import makanan from '@/assets/image/oke.jpg'
 </script>
 
 <style scoped>
 .home {
-  padding: 40px 20px;
-  text-align: center;
-  background: linear-gradient(to right, #ffecd2, #fcb69f);
-  min-height: 100vh;
+  background-image: url('@/assets/image/oke.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
-.hero {
-  background: white;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  width: 100%;
-}
-
-.hero h1 {
-  font-size: 2.5rem;
-  color: #ff6347;
-  margin-bottom: 16px;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 24px;
-}
-
-.hero button {
-  padding: 12px 24px;
-  font-size: 1rem;
-  background-color: #ff6347;
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 3rem;
+  border-radius: 10px;
+  text-align: center;
   color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffcb05;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.cta {
+  margin-top: 1rem;
+  display: inline-block;
+  background: #ff6b6b;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 1.1rem;
   transition: background 0.3s ease;
 }
 
-.hero button:hover {
-  background-color: #e5533d;
+.cta:hover {
+  background: #e04e4e;
 }
 </style>

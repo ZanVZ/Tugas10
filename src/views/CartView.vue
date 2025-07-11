@@ -5,17 +5,15 @@
     <div v-if="cartItems.length > 0" class="cart-items">
       <div v-for="(item, index) in cartItems" :key="index" class="cart-item">
         <img :src="item.image" :alt="item.name" class="item-image" />
-
         <div class="item-details">
           <h3>{{ item.name }}</h3>
-          <p class="price">Rp {{ item.price.toLocaleString() }}</p>
+          <p>Rp {{ item.price.toLocaleString() }}</p>
           <div class="quantity-control">
-            <button @click="decreaseQuantity(index)">−</button>
+            <button @click="decreaseQuantity(index)">-</button>
             <span>{{ item.quantity }}</span>
             <button @click="increaseQuantity(index)">+</button>
           </div>
         </div>
-
         <button @click="removeItem(index)" class="remove-btn">×</button>
       </div>
 
@@ -27,7 +25,7 @@
 
     <div v-else class="empty-cart">
       <p>Keranjang belanja Anda kosong</p>
-      <router-link to="/restaurant" class="shop-link">Lihat Menu</router-link>
+      <router-link to="/restaurant" class="shop-link">Kembali ke Menu</router-link>
     </div>
   </div>
 </template>
@@ -49,37 +47,35 @@ export default {
     }
   },
   methods: {
+    loadCart() {
+      const cart = localStorage.getItem("cart");
+      this.cartItems = cart ? JSON.parse(cart) : [];
+    },
+    updateLocalStorage() {
+      localStorage.setItem("cart", JSON.stringify(this.cartItems));
+    },
     increaseQuantity(index) {
       this.cartItems[index].quantity++;
-      this.saveToLocalStorage();
+      this.updateLocalStorage();
     },
     decreaseQuantity(index) {
       if (this.cartItems[index].quantity > 1) {
         this.cartItems[index].quantity--;
-        this.saveToLocalStorage();
+        this.updateLocalStorage();
       }
     },
     removeItem(index) {
       this.cartItems.splice(index, 1);
-      this.saveToLocalStorage();
+      this.updateLocalStorage();
     },
     checkout() {
       alert(`Pesanan sebesar Rp ${this.totalPrice.toLocaleString()} berhasil dibuat!`);
       this.cartItems = [];
       localStorage.removeItem("cart");
-    },
-    saveToLocalStorage() {
-      localStorage.setItem("cart", JSON.stringify(this.cartItems));
-    },
-    loadFromLocalStorage() {
-      const stored = JSON.parse(localStorage.getItem("cart"));
-      if (stored && Array.isArray(stored)) {
-        this.cartItems = stored;
-      }
     }
   },
   mounted() {
-    this.loadFromLocalStorage();
+    this.loadCart();
   }
 };
 </script>
@@ -92,111 +88,117 @@ export default {
   font-family: 'Segoe UI', sans-serif;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
+.cart-container h1 {
   color: #ff6347;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-align: center;
 }
 
 .cart-items {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
 }
 
 .cart-item {
+  flex: 0 0 300px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   padding: 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #eee;
   border-radius: 12px;
   background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  position: relative;
 }
 
 .item-image {
   width: 80px;
   height: 80px;
   object-fit: cover;
-  border-radius: 10px;
-  margin-right: 20px;
-  border: 1px solid #ccc;
-}
-
-.item-details {
-  flex: 1;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 .item-details h3 {
   margin: 0;
-  font-size: 1.1rem;
+  font-weight: 600;
   color: #333;
 }
 
-.price {
-  color: #ff6347;
-  font-weight: bold;
-  margin: 5px 0;
+.item-details p {
+  margin: 4px 0 0;
+  color: #777;
 }
 
 .quantity-control {
   display: flex;
   align-items: center;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .quantity-control button {
-  background: #ff6347;
+  width: 30px;
+  height: 30px;
+  background: #f0f0f0;
   border: none;
-  color: #fff;
-  width: 28px;
-  height: 28px;
-  font-size: 18px;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 700;
+  color: #ff6347;
+}
+
+.quantity-control button:hover {
+  background-color: #ff6347;
+  color: white;
 }
 
 .quantity-control span {
-  margin: 0 10px;
-  font-weight: bold;
+  margin: 0 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #555;
 }
 
 .remove-btn {
   background: none;
   border: none;
-  font-size: 22px;
-  color: #999;
+  font-size: 28px;
   cursor: pointer;
-  position: absolute;
-  top: 12px;
-  right: 12px;
+  color: #ff6347;
+  transition: color 0.3s ease;
 }
 
 .remove-btn:hover {
-  color: #ff0000;
+  color: #e5533d;
 }
 
 .cart-summary {
   margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
   text-align: right;
 }
 
 .cart-summary h3 {
+  font-weight: 700;
   font-size: 1.3rem;
-  color: #333;
+  color: #ff6347;
 }
 
 .checkout-btn {
   background: #ff6347;
   color: white;
   border: none;
-  padding: 10px 25px;
-  border-radius: 8px;
-  font-size: 1rem;
-  margin-top: 10px;
+  padding: 12px 28px;
+  border-radius: 12px;
   cursor: pointer;
-  font-weight: bold;
+  margin-top: 15px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
 .checkout-btn:hover {
@@ -205,17 +207,19 @@ h1 {
 
 .empty-cart {
   text-align: center;
-  color: #777;
-  margin-top: 40px;
+  margin-top: 50px;
+  color: #555;
   font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .shop-link {
   display: inline-block;
-  margin-top: 10px;
+  margin-top: 15px;
   color: #ff6347;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 700;
+  transition: color 0.3s ease;
 }
 
 .shop-link:hover {

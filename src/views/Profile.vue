@@ -1,59 +1,51 @@
 <template>
   <div class="profile-container">
-    <h1>Profil Saya</h1>
-    
+    <h1 class="gradient-title">👤 Profil Pengguna</h1>
+
     <div class="profile-card">
       <div class="avatar">
-        <img src="https://up.yimg.com/ib/th?id=OIP.bZ9omRLdr3xNhKm0Mu-oxAHaHa&pid=Api&rs=1&c=1&qlt=95&w=121&h=121" alt="Profile Picture">
+        <img src="https://us.123rf.com/450wm/romablack/romablack1911/romablack191100150/136165813-a-young-woman-hiker-in-a-blue-jacket-standing-in-the-mountains-on-sunse.jpg?ver=6" alt="Profile Picture" />
         <button @click="changePhoto" class="change-photo-btn">Ubah Foto</button>
       </div>
-      
+
       <div class="profile-form">
         <div class="form-group">
           <label>Nama Lengkap</label>
-          <input type="text" v-model="profile.name" placeholder="Nama Anda">
+          <input type="text" v-model="profile.name" />
         </div>
-        
         <div class="form-group">
           <label>Email</label>
-          <input type="email" v-model="profile.email" placeholder="Email Anda">
+          <input type="email" v-model="profile.email" />
         </div>
-        
         <div class="form-group">
           <label>Nomor Telepon</label>
-          <input type="tel" v-model="profile.phone" placeholder="Nomor telepon">
+          <input type="tel" v-model="profile.phone" />
         </div>
-        
         <div class="form-group">
           <label>Alamat</label>
-          <textarea v-model="profile.address" rows="3" placeholder="Alamat lengkap"></textarea>
+          <textarea v-model="profile.address" rows="3"></textarea>
         </div>
-        
-        <button @click="saveProfile" class="save-btn">Simpan Perubahan</button>
-      </div>
-    </div>
-    
-    <!-- ... -->
-    <!-- BAGIAN RIWAYAT PESANAN -->
-    <div class="order-history" v-if="orders.length > 0">
-      <h2>Riwayat Pesanan</h2>
-      <div class="orders">
-        <div v-for="(order, index) in orders" :key="index" class="order-item">
-          <div class="order-header">
-            <span class="order-id">#{{ order.id }}</span>
-            <span class="order-date">{{ order.date }}</span>
-            <span class="order-status" :class="order.status">{{ order.status }}</span>
-          </div>
-          <div class="order-details">
-            <p>{{ order.items }} items - Total: Rp {{ order.total.toLocaleString() }}</p>
-          </div>
-        </div>
+        <button @click="saveProfile" class="save-btn">💾 Simpan Perubahan</button>
       </div>
     </div>
 
+    <div class="order-history">
+      <h2>🧾 Riwayat Pesanan</h2>
+      <div v-if="orders.length > 0" class="orders">
+        <div v-for="(order, index) in orders" :key="index" class="order-item">
+          <div class="order-header">
+            <div><strong>#{{ order.id }}</strong></div>
+            <div class="order-date">{{ order.date }}</div>
+          </div>
+          <div class="order-details">
+            <p>{{ order.items }} item • Total: <strong>Rp {{ order.total.toLocaleString() }}</strong></p>
+            <span class="order-status" :class="order.status">{{ order.status }}</span>
+          </div>
+        </div>
+      </div>
       <p v-else class="no-orders">Belum ada riwayat pesanan</p>
     </div>
-  
+  </div>
 </template>
 
 <script>
@@ -70,7 +62,7 @@ export default {
       orders: [
         {
           id: 'P1111',
-          date: '27 mei 2025',
+          date: '27 Mei 2025',
           status: 'Selesai',
           items: 3,
           total: 95000
@@ -98,50 +90,73 @@ export default {
 
 <style scoped>
 .profile-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(145deg, #fffaf0, #ffe4e1);
+  border-radius: 20px;
+  box-shadow: inset 0 0 100px rgba(255, 240, 240, 0.3);
+  animation: fadeIn 0.8s ease;
 }
 
-.profile-container h1 {
-  color: #ff6347;
-  font-weight: 700;
-  margin-bottom: 25px;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.gradient-title {
   text-align: center;
+  font-size: 2.3rem;
+  background: linear-gradient(to right, #ff6347, #e43f5a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 30px;
 }
 
 .profile-card {
   display: flex;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  padding: 20px;
-  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 25px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+  margin-bottom: 40px;
+  transition: 0.3s ease-in-out;
+}
+
+.profile-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
 }
 
 .avatar {
   text-align: center;
-  margin-right: 30px;
+  flex: 1 1 180px;
 }
 
 .avatar img {
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
+  border: 4px solid #ff6347;
   object-fit: cover;
-  margin-bottom: 15px;
 }
 
 .change-photo-btn {
-  background: #f0f0f0;
-  border: none;
-  padding: 8px 15px;
+  margin-top: 10px;
+  background-color: #fff;
+  border: 1px solid #ff6347;
+  color: #ff6347;
+  padding: 8px 14px;
+  font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
-  color: #ff6347;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+  transition: 0.3s;
 }
 
 .change-photo-btn:hover {
@@ -150,7 +165,7 @@ export default {
 }
 
 .profile-form {
-  flex-grow: 1;
+  flex: 2;
 }
 
 .form-group {
@@ -158,10 +173,10 @@ export default {
 }
 
 .form-group label {
+  font-weight: bold;
   display: block;
   margin-bottom: 5px;
-  font-weight: 600;
-  color: #333;
+  color: #444;
 }
 
 .form-group input,
@@ -169,79 +184,94 @@ export default {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1rem;
-  color: #444;
+  background-color: #fff;
 }
 
 .save-btn {
-  background: #ff6347;
+  margin-top: 10px;
+  background: linear-gradient(to right, #ff6347, #e43f5a);
   color: white;
   border: none;
-  padding: 12px 28px;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: bold;
   border-radius: 12px;
   cursor: pointer;
-  margin-top: 10px;
-  font-weight: 700;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
+  transition: 0.3s;
 }
 
 .save-btn:hover {
-  background-color: #e5533d;
+  opacity: 0.9;
+}
+
+.order-history {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
 }
 
 .order-history h2 {
-  color: #ff6347;
-  font-weight: 700;
-  margin-bottom: 20px;
   text-align: center;
+  color: #ff6347;
+  margin-bottom: 20px;
+}
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .order-item {
-  border: 1px solid #eee;
-  border-radius: 12px;
+  background: #fff8f6;
+  border-left: 5px solid #ff6347;
   padding: 15px;
-  margin-bottom: 15px;
-  background: #fff;
+  border-radius: 10px;
+  transition: 0.2s ease;
+}
+
+.order-item:hover {
+  background: #fff2ef;
 }
 
 .order-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
-  font-weight: 600;
-  color: #333;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.order-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .order-status {
+  font-size: 0.9rem;
+  font-weight: bold;
   padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 10px;
   text-transform: capitalize;
 }
 
 .order-status.Selesai {
   background: #e6f7ee;
-  color: #42b983;
+  color: #2eaa7f;
 }
 
 .order-status.Dibatalkan {
-  background: #ffebee;
-  color: #ff5252;
-}
-
-.order-details p {
-  margin: 0;
-  color: #555;
+  background: #ffeaea;
+  color: #d33c3c;
 }
 
 .no-orders {
   text-align: center;
-  color: #888;
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-top: 20px;
+  color: #999;
+  font-style: italic;
 }
 </style>
